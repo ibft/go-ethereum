@@ -1,4 +1,4 @@
-// Copyright 2014 The go-ethereum Authors
+// Copyright 2017 The go-ethereum Authors
 // This file is part of the go-ethereum library.
 //
 // The go-ethereum library is free software: you can redistribute it and/or modify
@@ -14,19 +14,18 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package vm
+package istanbul
 
-import "errors"
+// RequestEvent is posted to propose a proposal
+type RequestEvent struct {
+	Proposal Proposal
+}
 
-// List execution errors
-var (
-	ErrOutOfGas                 = errors.New("out of gas")
-	ErrCodeStoreOutOfGas        = errors.New("contract creation code storage out of gas")
-	ErrDepth                    = errors.New("max call depth exceeded")
-	ErrTraceLimitReached        = errors.New("the number of logs reached the specified limit")
-	ErrInsufficientBalance      = errors.New("insufficient balance for transfer")
-	ErrContractAddressCollision = errors.New("contract address collision")
+// MessageEvent is posted for Istanbul engine communication
+type MessageEvent struct {
+	Payload []byte
+}
 
-	ErrReadOnlyValueTransfer = errors.New("VM in read-only mode. Value transfer prohibited.")
-	ErrNoCompatibleInterpreter  = errors.New("no compatible interpreter")
-)
+// FinalCommittedEvent is posted when a proposal is committed
+type FinalCommittedEvent struct {
+}

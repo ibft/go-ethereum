@@ -132,6 +132,9 @@ var (
 		utils.EWASMInterpreterFlag,
 		utils.EVMInterpreterFlag,
 		configFileFlag,
+		utils.EnableNodePermissionFlag,
+		utils.IstanbulRequestTimeoutFlag,
+		utils.IstanbulBlockPeriodFlag,
 	}
 
 	rpcFlags = []cli.Flag{
@@ -263,6 +266,10 @@ func geth(ctx *cli.Context) error {
 	}
 	node := makeFullNode(ctx)
 	startNode(ctx, node)
+
+	// Check if a valid consensus is used
+	quorumValidateConsensus(node, ctx.GlobalBool(utils.RaftModeFlag.Name))
+
 	node.Wait()
 	return nil
 }
